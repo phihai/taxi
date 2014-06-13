@@ -5,7 +5,8 @@
 
     <uses-sdk
         android:minSdkVersion="9"
-        android:targetSdkVersion="19" />
+        android:targetSdkVersion="17"
+        android:maxSdkVersion="19" />
 
     <application
         android:allowBackup="true"
@@ -13,11 +14,13 @@
         android:label="@string/app_name"
         android:theme="@style/AppTheme" >
         
-        <activity android:name="come.example.taxi.MainActivity">
+        <activity android:name="com.example.taxi.MainActivity">
             <intent-filter>
             <action android:name="android.intent.action.MAIN" />
             <category android:name="android.intent.category.LAUNCHER" />
         </intent-filter>
+        </activity>
+        <activity android:name="com.example.taxi.DetailActivity">
         </activity>
     </application>
 
