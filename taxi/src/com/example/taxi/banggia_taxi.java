@@ -4,6 +4,9 @@ import java.io.File;
 import java.io.FileOutputStream;
 import java.io.InputStream;
 import java.util.ArrayList;
+
+import com.example.taxi.TaxiAdapter;
+
 import android.app.Activity;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
@@ -27,12 +30,11 @@ public class banggia_taxi extends Activity {
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		setContentView(R.layout.banggia_taxi);
-		Spinner spin=(Spinner) findViewById(R.id.spinner1);
+		setContentView(R.layout.detail_activity);	
 		dsbanggia=(ListView)findViewById(R.id.dsbanggiataxi);
 		arr=new ArrayList<String>();
 		
-		File f = new File(getCacheDir()+"/taxi_data.db");
+		/*File f = new File(getCacheDir()+"/taxi_data.db");
 		
 		  if (!f.exists()) try {
 
@@ -48,35 +50,28 @@ public class banggia_taxi extends Activity {
 		    fos.write(buffer);
 		    fos.close();
 		    
-		  } catch (Exception e) { throw new RuntimeException(e); }
+		  } catch (Exception e) { throw new RuntimeException(e); }*/
 		SQLiteDatabase data=openOrCreateDatabase(getCacheDir()+"/taxi_data.db", MODE_PRIVATE, null);
 	
-		String sql="select HangXe from " +banggia;
+		String sql="select HangXe,GiaMoCua,GiaNhoHon31km,GiaLonHon31km from BANGGIATAXI";
+		ArrayList<BANGGIATAXIDTO>ds=new ArrayList<BANGGIATAXIDTO>();
 		Cursor cursor=data.rawQuery(sql, null);
 		if(cursor.moveToFirst())
 		{
 			do{
-				
-			
-				arr.add(cursor.getString(0));
+				BANGGIATAXIDTO banggiataxi=new BANGGIATAXIDTO();
+				banggiataxi.setHangXe(cursor.getString(0));
+				banggiataxi.setGiaMoCua(cursor.getFloat(1));
+				banggiataxi.setGiaNhoHon31km(cursor.getFloat(2));
+				banggiataxi.setGiaLonHon31km(cursor.getFloat(3));
+				ds.add(banggiataxi);
 			}
 			while(cursor.moveToNext());
 		}
-		array=new String[arr.size()];
-		int i=0;
-		for(String mang:arr)
-		{
-			array[i]=mang;
-			i=i+1;
-		}
-		ArrayAdapter<String> adapter=new ArrayAdapter<String>(this,android.R.layout.simple_list_item_1,array); 
-	    adapter.setDropDownViewResource(android.R.layout.simple_list_item_single_choice);
-	    spin.setAdapter(adapter);
-		spin.setOnItemSelectedListener(new MyProcessEvent());
-		
-		
+		//ArrayAdapter<BANGGIATAXIDTO >dapter=new ArrayAdapter<BANGGIATAXIDTO>(banggia_taxi.this,android.R.layout.simple_list_item_1,ds);
+		dsbanggia.setAdapter(new TaxiAdapter(this, ds));
 	}
-	private class MyProcessEvent implements OnItemSelectedListener
+	/*private class MyProcessEvent implements OnItemSelectedListener
 	{
 
 		@Override
@@ -98,9 +93,7 @@ public class banggia_taxi extends Activity {
 				while(cursor.moveToNext());
 			}
 			ArrayAdapter<BANGGIATAXIDTO >dapter=new ArrayAdapter<BANGGIATAXIDTO>(banggia_taxi.this,android.R.layout.simple_list_item_1,ds);
-			dsbanggia.setAdapter(dapter);
-		 
-		
+			dsbanggia.setAdapter(dapter);	
 		}
 
 		@Override
@@ -109,7 +102,7 @@ public class banggia_taxi extends Activity {
 			
 		}
 		
-	}
+	}*/
     
 	
 }

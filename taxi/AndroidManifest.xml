@@ -25,6 +25,8 @@
         
         <activity android:name="com.example.taxi.interface_user">
         </activity>
+        <activity android:name="com.example.taxi.error_activity">
+        </activity>
     </application>
 
 </manifest>
