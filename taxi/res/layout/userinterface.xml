@@ -9,8 +9,8 @@
         android:id="@+id/button4"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignBaseline="@+id/button3"
-        android:layout_alignBottom="@+id/button3"
+        android:layout_alignBaseline="@+id/bntbanggia"
+        android:layout_alignBottom="@+id/bntbanggia"
         android:layout_alignLeft="@+id/button2"
         android:layout_alignRight="@+id/button2"
         android:text="Thoat" />
@@ -19,29 +19,38 @@
         android:id="@+id/button2"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignBaseline="@+id/button1"
-        android:layout_alignBottom="@+id/button1"
+        android:layout_alignBaseline="@+id/bntstart"
+        android:layout_alignBottom="@+id/bntstart"
         android:layout_alignParentRight="true"
         android:layout_marginRight="20dp"
         android:text="Hanh Trinh" />
 
-    <Button
-        android:id="@+id/button1"
+    <ImageView
+        android:id="@+id/imageView1"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_above="@+id/button3"
-        android:layout_marginRight="37dp"
-        android:layout_toLeftOf="@+id/button4"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentTop="true"
+        android:layout_marginTop="14dp"
+        android:src="@drawable/hqdefault" />
+
+    <Button
+        android:id="@+id/bntstart"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/imageView1"
+        android:layout_marginRight="35dp"
+        android:layout_marginTop="25dp"
+        android:layout_toLeftOf="@+id/button2"
         android:text="Tim duong" />
 
     <Button
-        android:id="@+id/button3"
+        android:id="@+id/bntbanggia"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignLeft="@+id/button1"
-        android:layout_alignParentBottom="true"
-        android:layout_alignRight="@+id/button1"
-        android:layout_marginBottom="55dp"
+        android:layout_alignLeft="@+id/bntstart"
+        android:layout_alignRight="@+id/bntstart"
+        android:layout_below="@+id/bntstart"
         android:text="Bang gia" />
 
 </RelativeLayout>

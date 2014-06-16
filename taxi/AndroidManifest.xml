@@ -20,7 +20,10 @@
             <category android:name="android.intent.category.LAUNCHER" />
         </intent-filter>
         </activity>
-        <activity android:name="com.example.taxi.DetailActivity">
+        <activity android:name="com.example.taxi.banggia_taxi">
+        </activity>
+        
+        <activity android:name="com.example.taxi.interface_user">
         </activity>
     </application>
 
