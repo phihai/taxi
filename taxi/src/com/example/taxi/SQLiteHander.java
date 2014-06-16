@@ -104,7 +104,7 @@ public class SQLiteHander extends Activity{
 	{
 		ArrayList<BANGGIATAXIDTO>arr=new ArrayList<BANGGIATAXIDTO>();
 		SQLiteDatabase data=openOrCreateDatabase(getCacheDir()+"/taxi_data.db", MODE_PRIVATE, null);
-		String sql="select GiaMoCua, GiaNhoHon31km, GiaLonHon31km from BANGGIATAXI where IDBangGia = "+idbanggia;
+		String sql="select GiaMoCua, GiaNhoHon31km, GiaLonHon31km from BANGGIATAXI where IDBangGia = '"+idbanggia;
 		Cursor cursor=data.rawQuery(sql, null);
 		if(cursor.moveToFirst())
 		{

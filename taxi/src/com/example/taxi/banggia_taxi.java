@@ -4,7 +4,6 @@ import java.io.File;
 import java.io.FileOutputStream;
 import java.io.InputStream;
 import java.util.ArrayList;
-
 import android.app.Activity;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
@@ -15,20 +14,24 @@ import android.widget.AdapterView.OnItemSelectedListener;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
 import android.widget.Spinner;
-import android.widget.Toast;
+
 
 
 
 public class banggia_taxi extends Activity {
 	private static final String banggia="BANGGIATAXI";
 	ArrayList<String> arr;
+	String array[]=null;
+	ListView dsbanggia;
+	String hangxe=null;
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.banggia_taxi);
 		Spinner spin=(Spinner) findViewById(R.id.spinner1);
-		ListView dsbanggia=(ListView)findViewById(R.id.listdsbanggia);
+		dsbanggia=(ListView)findViewById(R.id.dsbanggiataxi);
 		arr=new ArrayList<String>();
+		
 		File f = new File(getCacheDir()+"/taxi_data.db");
 		
 		  if (!f.exists()) try {
@@ -50,20 +53,27 @@ public class banggia_taxi extends Activity {
 	
 		String sql="select HangXe from " +banggia;
 		Cursor cursor=data.rawQuery(sql, null);
-		int i=0;
 		if(cursor.moveToFirst())
 		{
 			do{
 				
+			
 				arr.add(cursor.getString(0));
 			}
 			while(cursor.moveToNext());
 		}
-		
-		ArrayAdapter<String> adapter=new ArrayAdapter<String>(this,android.R.layout.simple_list_item_1,arr); 
+		array=new String[arr.size()];
+		int i=0;
+		for(String mang:arr)
+		{
+			array[i]=mang;
+			i=i+1;
+		}
+		ArrayAdapter<String> adapter=new ArrayAdapter<String>(this,android.R.layout.simple_list_item_1,array); 
 	    adapter.setDropDownViewResource(android.R.layout.simple_list_item_single_choice);
 	    spin.setAdapter(adapter);
 		spin.setOnItemSelectedListener(new MyProcessEvent());
+		
 		
 	}
 	private class MyProcessEvent implements OnItemSelectedListener
@@ -72,9 +82,25 @@ public class banggia_taxi extends Activity {
 		@Override
 		public void onItemSelected(AdapterView<?> arg0, View arg1, int arg2,
 				long arg3) {
-			
-			//String sql="Select GiaMoCua, GiaNhoLon31km, GiaLonHon31km from BANGGIATAXI where HangXe=" +arr[arg2];
-		   //Toast.makeText(banggia_taxi.this,arg2 , Toast.LENGTH_SHORT).show();
+			ArrayList<BANGGIATAXIDTO>ds=new ArrayList<BANGGIATAXIDTO>();
+			SQLiteDatabase data=openOrCreateDatabase(getCacheDir()+"/taxi_data.db", MODE_PRIVATE, null);
+			String sql="Select GiaMoCua, GiaNhoHon31km, GiaLonHon31km from BANGGIATAXI where HangXe='" + array[arg2] + "'";
+			Cursor cursor=data.rawQuery(sql, null);
+			if(cursor.moveToFirst())
+			{
+				do{
+					BANGGIATAXIDTO banggiataxi=new BANGGIATAXIDTO();
+					banggiataxi.setGiaMoCua(cursor.getFloat(0));
+					banggiataxi.setGiaNhoHon31km(cursor.getFloat(1));
+					banggiataxi.setGiaLonHon31km(cursor.getFloat(2));
+					ds.add(banggiataxi);
+				}
+				while(cursor.moveToNext());
+			}
+			ArrayAdapter<BANGGIATAXIDTO >dapter=new ArrayAdapter<BANGGIATAXIDTO>(banggia_taxi.this,android.R.layout.simple_list_item_1,ds);
+			dsbanggia.setAdapter(dapter);
+		 
+		
 		}
 
 		@Override
@@ -84,6 +110,8 @@ public class banggia_taxi extends Activity {
 		}
 		
 	}
+    
+	
 }
 
 
